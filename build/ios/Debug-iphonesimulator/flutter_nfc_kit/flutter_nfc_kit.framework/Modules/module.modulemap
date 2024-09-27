@@ -1,0 +1,11 @@
+framework module flutter_nfc_kit {
+  umbrella header "flutter_nfc_kit-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module flutter_nfc_kit.Swift {
+  header "flutter_nfc_kit-Swift.h"
+  requires objc
+}

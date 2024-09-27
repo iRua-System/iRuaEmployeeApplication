@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDNi_YCAQB45mjrsypyHnyRiaUvAvwskrM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>790223659136</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.irua.kiosk</string>
+	<key>PROJECT_ID</key>
+	<string>cwa-irua-b23e1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cwa-irua-b23e1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:790223659136:ios:a9e87d967853202cda4665</string>
+</dict>
+</plist>

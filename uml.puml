@@ -1,0 +1,315 @@
+@startuml
+set namespaceSeparator ::
+
+class "cwa_irua_employee::widget::dialog.dart::OpenDialog" {
+  {static} +void displayDialog()
+  {static} +void popupDialog()
+}
+
+class "cwa_irua_employee::widget::backButton.dart::MyBackButton" {
+  +Color color
+  +Widget build()
+}
+
+"cwa_irua_employee::widget::backButton.dart::MyBackButton" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "cwa_irua_employee::widget::backButton.dart::MyBackButton"
+
+class "cwa_irua_employee::widget::service_column.dart::ServiceColumn" {
+  +String? title
+  +Function? onTap
+  +String? price
+  +Icon? icon
+  +Function? onPressedIcon
+  +Widget build()
+}
+
+"cwa_irua_employee::widget::service_column.dart::ServiceColumn" o-- "flutter::src::widgets::icon.dart::Icon"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "cwa_irua_employee::widget::service_column.dart::ServiceColumn"
+
+class "cwa_irua_employee::widget::service_column.dart::MoneyFormat" {
+  {static} +String formatMoney()
+}
+
+class "cwa_irua_employee::firebase_options.dart::DefaultFirebaseOptions" {
+  {static} +FirebaseOptions android
+  {static} +FirebaseOptions ios
+  {static} +FirebaseOptions currentPlatform
+}
+
+"cwa_irua_employee::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+
+class "cwa_irua_employee::provider::checkNfc_provider.dart::CheckNfcProvider" {
+  +dynamic checkNfc()
+}
+
+class "cwa_irua_employee::provider::takeAttendance_provider.dart::TakeAttendanceProvider" {
+  +dynamic takeAttendance()
+  +dynamic logout()
+}
+
+class "cwa_irua_employee::provider::takeOrder_provider.dart::TakeOrderProvider" {
+  +dynamic takeOrder()
+}
+
+class "cwa_irua_employee::provider::transaction_provider.dart::TransactionProvider" {
+  +dynamic getListEmployeeWithTransaction()
+  +dynamic getTransactionById()
+}
+
+class "cwa_irua_employee::main.dart::MyHttpOverrides" {
+  +HttpClient createHttpClient()
+}
+
+"dart::_http::HttpOverrides" <|-- "cwa_irua_employee::main.dart::MyHttpOverrides"
+
+class "cwa_irua_employee::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "cwa_irua_employee::main.dart::MyApp"
+
+class "cwa_irua_employee::main.dart::MyHomePage" {
+  +_MyHomePageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "cwa_irua_employee::main.dart::MyHomePage"
+
+class "cwa_irua_employee::main.dart::_MyHomePageState" {
+  +List<TableRow> emptyRows
+  +List<Employee> listEmployee
+  +String statusEmp
+  +TransactionBloc transactionViewModel
+  +dynamic data
+  +StreamSubscription<dynamic> reloadStreamSubscription
+  -DatabaseReference _reloadRequest
+  +TextEditingController nfcController
+  +String submittedString
+  +TakeAttendanceBloc attendanceBloc
+  +void initState()
+  +void update()
+  +Widget build()
+  +Widget waitingForEmployee()
+  +Widget note()
+  +Widget title()
+  +void didUpdateWidget()
+  +Widget showDataTable()
+  +TableRow? tableRow()
+  +dynamic onSignInSignOutClicked()
+  +bool nfcDialog()
+  +void showDialogConfirmActive()
+  +Widget transactionCell()
+  +Widget employeeCell()
+  +Widget headerCell()
+  +Widget timeTable()
+}
+
+"cwa_irua_employee::main.dart::_MyHomePageState" o-- "cwa_irua_employee::bloc::transaction_bloc.dart::TransactionBloc"
+"cwa_irua_employee::main.dart::_MyHomePageState" o-- "dart::async::StreamSubscription<dynamic>"
+"cwa_irua_employee::main.dart::_MyHomePageState" o-- "firebase_database::firebase_database.dart::DatabaseReference"
+"cwa_irua_employee::main.dart::_MyHomePageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"cwa_irua_employee::main.dart::_MyHomePageState" o-- "cwa_irua_employee::bloc::takeAttendance_bloc.dart::TakeAttendanceBloc"
+"flutter::src::widgets::framework.dart::State" <|-- "cwa_irua_employee::main.dart::_MyHomePageState"
+
+class "cwa_irua_employee::model::customer.dart::Customer" {
+  +String cusId
+  +String fullname
+  +String phoneNum
+  +String deviceToken
+}
+
+class "cwa_irua_employee::model::service.dart::Service" {
+  +int serviceVehicleId
+  +String name
+  +double price
+}
+
+class "cwa_irua_employee::model::transaction.dart::Transaction" {
+  +String id
+  +String status
+  +double price
+  +String vehiclePlate
+  +String vehicleName
+  +String vehicleBrand
+  +List<Service> listService
+  +Customer customer
+}
+
+"cwa_irua_employee::model::transaction.dart::Transaction" o-- "cwa_irua_employee::model::customer.dart::Customer"
+
+class "cwa_irua_employee::model::employee.dart::Employee" {
+  +String id
+  +String name
+  +String serialNumNfc
+  +List<Transaction> listTransaction
+  +bool isBusy
+}
+
+class "cwa_irua_employee::view::transactionDetails.dart::TransactionDetailsScreen" {
+  +String? deviceToken
+  +String? nfc
+  +String? transactionId
+  +Employee? oldEmp
+  +bool? status
+  +String? transactionInfo
+  +List<Employee>? listEmp
+  +_TransactionDetailsScreen createState()
+}
+
+"cwa_irua_employee::view::transactionDetails.dart::TransactionDetailsScreen" o-- "cwa_irua_employee::model::employee.dart::Employee"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "cwa_irua_employee::view::transactionDetails.dart::TransactionDetailsScreen"
+
+class "cwa_irua_employee::view::transactionDetails.dart::_TransactionDetailsScreen" {
+  +Transaction transaction
+  +TransactionBloc transactionViewModel
+  +TextEditingController codeController
+  +TextEditingController phoneController
+  +TextEditingController nameController
+  +TextEditingController plateController
+  +TextEditingController vehicleBrandController
+  +TextEditingController vehicleTypeController
+  +TextEditingController nfcController
+  +TakeOrderBloc takeBloc
+  +void initState()
+  +Widget build()
+  +Column textField()
+  +Column phoneField()
+  +Padding fullnameWidget()
+  +Widget workingButton()
+  +void onVehicleReceiveClicked()
+  +dynamic nfcDialog()
+  +void showOTP()
+  +void showDialogConfirmActive()
+}
+
+"cwa_irua_employee::view::transactionDetails.dart::_TransactionDetailsScreen" o-- "cwa_irua_employee::model::transaction.dart::Transaction"
+"cwa_irua_employee::view::transactionDetails.dart::_TransactionDetailsScreen" o-- "cwa_irua_employee::bloc::transaction_bloc.dart::TransactionBloc"
+"cwa_irua_employee::view::transactionDetails.dart::_TransactionDetailsScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"cwa_irua_employee::view::transactionDetails.dart::_TransactionDetailsScreen" o-- "cwa_irua_employee::bloc::takeOrder_bloc.dart::TakeOrderBloc"
+"flutter::src::widgets::framework.dart::State" <|-- "cwa_irua_employee::view::transactionDetails.dart::_TransactionDetailsScreen"
+
+class "cwa_irua_employee::view::transactionDetails.dart::LeftWidget" {
+  +double width
+  +double height
+  +List<Service> services
+  +_LeftWidgetState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "cwa_irua_employee::view::transactionDetails.dart::LeftWidget"
+
+class "cwa_irua_employee::view::transactionDetails.dart::_LeftWidgetState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "cwa_irua_employee::view::transactionDetails.dart::_LeftWidgetState"
+
+class "cwa_irua_employee::view::nfc.dart::NfcScreen" {
+  +String? deviceToken
+  +String? transId
+  +String? phoneNumber
+  +String? status
+  +String? content
+  +List<Employee>? listEmp
+  +Employee? emp
+  +_NfcScreen createState()
+}
+
+"cwa_irua_employee::view::nfc.dart::NfcScreen" o-- "cwa_irua_employee::model::employee.dart::Employee"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "cwa_irua_employee::view::nfc.dart::NfcScreen"
+
+class "cwa_irua_employee::view::nfc.dart::_NfcScreen" {
+  +TextEditingController nfcController
+  +TextEditingController codeController
+  +TakeAttendanceBloc attendanceBloc
+  +TakeOrderBloc takeBloc
+  +void initState()
+  +Widget build()
+  +void onSignInClicked()
+  +void onSignOutClicked()
+  +void onTakeOrderClicked()
+  +void showOTP()
+  +void showDialogConfirmActive()
+}
+
+"cwa_irua_employee::view::nfc.dart::_NfcScreen" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"cwa_irua_employee::view::nfc.dart::_NfcScreen" o-- "cwa_irua_employee::bloc::takeAttendance_bloc.dart::TakeAttendanceBloc"
+"cwa_irua_employee::view::nfc.dart::_NfcScreen" o-- "cwa_irua_employee::bloc::takeOrder_bloc.dart::TakeOrderBloc"
+"flutter::src::widgets::framework.dart::State" <|-- "cwa_irua_employee::view::nfc.dart::_NfcScreen"
+
+class "cwa_irua_employee::view::nfc.dart::Counter" {
+  +String? number
+  +Color? color
+  +String? image
+  +double? width
+  +double? height
+  +Widget build()
+}
+
+"cwa_irua_employee::view::nfc.dart::Counter" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "cwa_irua_employee::view::nfc.dart::Counter"
+
+class "cwa_irua_employee::helper::noti.dart::PushNoti" {
+  -DatabaseReference _notiRequest
+  +StreamSubscription<dynamic> approveStreamSubscription
+  -DatabaseReference _approveRequest
+  +TakeOrderBloc takeBloc
+  +void updateNoti()
+  +void listenToUpdateNoti()
+  +dynamic sendNotiToUser()
+}
+
+"cwa_irua_employee::helper::noti.dart::PushNoti" o-- "firebase_database::firebase_database.dart::DatabaseReference"
+"cwa_irua_employee::helper::noti.dart::PushNoti" o-- "dart::async::StreamSubscription<dynamic>"
+"cwa_irua_employee::helper::noti.dart::PushNoti" o-- "cwa_irua_employee::bloc::takeOrder_bloc.dart::TakeOrderBloc"
+
+class "cwa_irua_employee::bloc::transaction_bloc.dart::TransactionBloc" {
+  +StreamController<dynamic> employeeController
+  +StreamController<dynamic> transactionController
+  +Stream<dynamic> listEmp
+  +Stream<dynamic> transaction
+  +dynamic getAll()
+  +dynamic getTransaction()
+  +dynamic dispose()
+}
+
+"cwa_irua_employee::bloc::transaction_bloc.dart::TransactionBloc" o-- "dart::async::StreamController<dynamic>"
+"cwa_irua_employee::bloc::transaction_bloc.dart::TransactionBloc" o-- "dart::async::Stream<dynamic>"
+
+class "cwa_irua_employee::bloc::checkNfc_bloc.dart::CheckNfcBloc" {
+  +StreamController<dynamic> checkNfcStream
+  +Stream<dynamic> checkNfc
+  +dynamic checkNfcBloc()
+  +void dispose()
+}
+
+"cwa_irua_employee::bloc::checkNfc_bloc.dart::CheckNfcBloc" o-- "dart::async::StreamController<dynamic>"
+"cwa_irua_employee::bloc::checkNfc_bloc.dart::CheckNfcBloc" o-- "dart::async::Stream<dynamic>"
+
+class "cwa_irua_employee::bloc::takeAttendance_bloc.dart::TakeAttendanceBloc" {
+  +StreamController<dynamic> takeAttendance
+  +StreamController<dynamic> isLogging
+  +StreamController<dynamic> logoutController
+  +Stream<dynamic> isLoggingStream
+  +Stream<dynamic> takeAttendanceStream
+  +Stream<dynamic> logoutStream
+  +dynamic takeAttendanceNfc()
+  +dynamic logout()
+  +void dispose()
+}
+
+"cwa_irua_employee::bloc::takeAttendance_bloc.dart::TakeAttendanceBloc" o-- "dart::async::StreamController<dynamic>"
+"cwa_irua_employee::bloc::takeAttendance_bloc.dart::TakeAttendanceBloc" o-- "dart::async::Stream<dynamic>"
+
+class "cwa_irua_employee::bloc::takeOrder_bloc.dart::TakeOrderBloc" {
+  +StreamController<dynamic> takeOrder
+  +StreamController<dynamic> isChecking
+  +Stream<dynamic> isCheckingStream
+  +Stream<dynamic> takeOrderStream
+  +dynamic takeOrderBloc()
+  +void dispose()
+}
+
+"cwa_irua_employee::bloc::takeOrder_bloc.dart::TakeOrderBloc" o-- "dart::async::StreamController<dynamic>"
+"cwa_irua_employee::bloc::takeOrder_bloc.dart::TakeOrderBloc" o-- "dart::async::Stream<dynamic>"
+
+
+@enduml
